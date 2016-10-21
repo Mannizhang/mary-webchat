@@ -1,4 +1,4 @@
-WebSocket WebSocket(
+WebSocket WebSocket
   in DOMString url,
   in optional DOMString protocols
 );

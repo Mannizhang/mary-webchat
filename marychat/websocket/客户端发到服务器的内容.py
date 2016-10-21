@@ -6,3 +6,5 @@ GET /chat HTTP/1.1
     Origin: http://example.com
     Sec-WebSocket-Protocol: chat, superchat
     Sec-WebSocket-Version: 13
+
+

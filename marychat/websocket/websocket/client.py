@@ -1,12 +1,4 @@
-#!/usr/bin/env python
-
-import logging
-
-from tornado import gen
-from tornado.ioloop import IOLoop
-from tornado.options import define, options, parse_command_line
-from tornado.websocket import WebSocketConnect
-
+=
 define('url', default='ws://localhost:9001')
 define('name', default='Tornado')
 

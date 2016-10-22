@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket demo</title>
+</head>
+<body>
+输入你的名字:<input id="name" type="text" title="输入你的名字"/>
+<br>
+<input id="text" type="text" title="内容"/>
+<input id="btn" type="button" title="发送" onclick="send()" value="发送"/>
+<ul></ul>
+<script>
+    SocketCreated = false;
+
+    function ToggleConnectionClicked() {
+        if (SocketCreated && (ws.readyState == 0 || ws.readyState == 1)) {
+            ws.close();
+        } else {
+            console.log("准备连接到聊天服务器 ...");
+            try {
+                ws =
+                        new WebSocket("ws://localhost:5678");
+                SocketCreated = true;
+            } catch (ex) {
+                console.log(ex, "ERROR");
+                return;
+            }
+            ws.onopen = WSonOpen;
+            ws.onmessage = WSonMessage;
+            ws.onclose = WSonClose;
+            ws.onerror = WSonError;
+        }
+    }
+    ;
+
+    function WSonOpen() {
+        console.log("连接已经建立。", "OK");
+    }
+    ;
+
+    function WSonMessage(event) {
+        console.log(event.data);
+        //
+        var messages = document.getElementsByTagName('ul')[0],
+                message = document.createElement('li'),
+                content = document.createTextNode(event.data);
+
+        message.appendChild(content);
+        messages.appendChild(message);
+    }
+    ;
+
+    function WSonClose() {
+        console.log("连接关闭。", "ERROR");
+    }
+    ;
+
+
+    function WSonError() {
+        console.log("WebSocket错误。", "ERROR");
+    }
+    ;
+
+
+    ToggleConnectionClicked();
+    function send() {
+        if (document.getElementById("text").value != "") {
+            ws.send(document.getElementById("name").value + "说 :\"" +
+                    document.getElementById("text").value + "\"");
+            document.getElementById("text").value = "";
+        }
+    }
+    ;
+
+</script>
+</body>
+</html>

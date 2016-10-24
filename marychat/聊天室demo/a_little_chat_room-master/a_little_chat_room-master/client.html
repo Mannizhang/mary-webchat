@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>聊天 Demo</title>
+</head>
+<body>
+<div>
+    你的名字:<input type="text" id="name" title="你的名字"/><br>
+    <button id="connect" type="button" onclick="connect()">连接</button>
+    <button id="disconnect" type="button" onclick="disconnect()">断开连接</button>
+    <br>
+    <input type="text" id="content" title="内容"/>
+    <button id="send" type="button" onclick="send()">发送</button>
+    <br>
+    <ul id="messageBoard">
+
+    </ul>
+</div>
+<script>
+    var ws;
+
+    function connect() {
+        ws = new WebSocket("ws://localhost:9999/ws");
+        ws.onopen = function () {
+            console.log("打开连接了");
+        };
+
+        ws.onmessage = function (event) {
+            console.log("接收到", event.data);
+            var messages = document.getElementById("messageBoard");
+            var message = document.createElement('li');
+            var content = document.createTextNode(event.data);
+
+            message.appendChild(content);
+            messages.appendChild(message);
+        };
+
+        ws.onclose = function () {
+            console.log("关闭连接")
+        };
+
+        ws.onerror = function () {
+            console.log("WebSocket错误。", "ERROR");
+        };
+    }
+
+    function disconnect() {
+        ws.close();
+    }
+
+    function send() {
+        var name = document.getElementById("name").value;
+        var content = document.getElementById("content").value;
+        ws.send(name+":"+content);
+    }
+
+
+</script>
+</body>
+</html>

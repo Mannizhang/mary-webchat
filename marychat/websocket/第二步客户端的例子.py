@@ -1,14 +1,13 @@
-import asyncio
+import asyncio.async
 import websockets
 
-async def hello():
-    async with websockets.connect('ws://localhost:8765') as websocket:
 
-        name = input("What's your name? ")
-        await websocket.send(name)
-        print("> {}".format(name))
 
-        greeting = await websocket.recv()
-        print("< {}".format(greeting))
 
-asyncio.get_event_loop().run_until_complete(hello())
+async def server(websocket,path):
+    pass;
+
+start_server = websockets.serve(server, '127.0.0.1', 9999)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()

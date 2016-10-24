@@ -5,6 +5,10 @@
 </head>
 <body>
 输入你的名字:<input id="name" type="text" title="输入你的名字"/>
+<br>
+<input id="text" type="text" title="内容"/>
+<input id="btn" type="button" title="发送" onclick="send()" value="发送"/>
+<ul></ul>
 <script>
     var ws = new WebSocket("ws://127.0.0.1:5678/"),
             messages = document.createElement('ul');

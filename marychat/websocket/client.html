@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室 demo</title>
+</head>
+<body>
+<!--设置三个按钮，开始，断开连接，发送内容的。-->
+<div>
+    <button id="connect" value="开始连接" onload="connect()">开始连接</button>
+    <button id="disConnect" value="断开连接" onload="disDisConnect()">断开连接</button>
+    <button id="send" value="发送">发送</button>
+
+</div>
+<script>
+    var ws;
+    //建立连接
+    function connect() {
+        ws = new WebSocket("ws://localhost:9998");
+        ws.onopen = function () //监听 到了 open事件
+        {
+            console.log("建立了连接")
+        };
+        ws.onmessage = function (evt) {
+            console.log("接收到了信息")
+        };
+        ws.onclose = function () {
+            console.log("连接关闭了")
+        };
+    }
+
+    function disDisConnect() {
+        ws.close();
+    }
+
+    function send() {
+        ws.send();
+    }
+
+</script>
+</body>
+</html>

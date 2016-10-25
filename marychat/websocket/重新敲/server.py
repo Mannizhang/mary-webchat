@@ -13,9 +13,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
 # 设置路由器
--application = tornado.web.Application([
-    +
-
+application = tornado.web.Application([
 
 class SocketHandler(websocket.WebSocketHandler):
     def open(self):
@@ -42,4 +40,5 @@ application = web.Application([
 
 if __name__ == "__main__"
     application.listen(9999)
+    tornado.ioloop.IOLoop.instance().start()
     ioloop.IOLoop.instance().start()

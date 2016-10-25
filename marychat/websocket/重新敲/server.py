@@ -1,22 +1,17 @@
-import tornado.web
-import tornado.ioloop
-import tornado.web
+
 from tornado import websocket, web, ioloop
 
+class MainHandler(web.RequestHandler):
+    def get(self):
+         self.render("client2.html")
 
-class MainHandler(tornado.web.RequestHandler):
-
-
-    class MainHandler(web.RequestHandler):
-        def get(self):
-            self.render("client2.html")
+user = []
 
 
-# 设置路由器
-application = tornado.web.Application([
 
 class SocketHandler(websocket.WebSocketHandler):
     def open(self):
+        user.append(self)
         print("连接成功")
 
     def on_connection_close(self):
@@ -24,13 +19,16 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def on_message(self, message):
         print(message)
-        self.write_message(message)
+        for ws in user:
+            ws.write_message(message)
 
     def on_finish(self):
         print("finish")
 
     def on_close(self):
         print("连接关闭")
+        user.remove(self)
+
 
 
 application = web.Application([
@@ -40,5 +38,4 @@ application = web.Application([
 
 if __name__ == "__main__"
     application.listen(9999)
-    tornado.ioloop.IOLoop.instance().start()
     ioloop.IOLoop.instance().start()

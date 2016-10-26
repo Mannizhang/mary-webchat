@@ -18,6 +18,16 @@
 
 </div>
 <script>
+   function registered() {
+       $.ajax({
+           type:"POST",
+           url:"http://localhost:9999/register"
+           data:document.getElementById("username").value+""+,
+           dataType:dataTypes,
+           success:success
+       });
+   }
+
     var ws;
 
     function connect() {
